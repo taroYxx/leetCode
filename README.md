@@ -14,3 +14,7 @@
 
 ## leetCode6 Z 字形变换
 1 合并 num-1 次上 和 下
+
+
+## leetCode7 整数反转
+1 
