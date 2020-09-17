@@ -18,3 +18,7 @@
 
 ## leetCode7 整数反转
 1 
+
+## leetCode8  字符串转换整数 (atoi)
+1 parseInt 2 自动机
+
