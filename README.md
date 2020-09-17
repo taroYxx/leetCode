@@ -22,3 +22,7 @@
 ## leetCode8  字符串转换整数 (atoi)
 1 parseInt 2 自动机
 
+
+## leetCode9  回文数
+1 二分比较 2 翻转再比较
+
