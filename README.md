@@ -52,6 +52,12 @@
 2 去重 if(index > 0 && nums[index] == nums[index-1]) break;  
 3 if (j - 1 > index && nums[j] === nums[j - 1]) break;
 
+## leetCode19 删除链表的倒数第N个节点
+1 双指针 两个指针的距离为N， 一趟遍历完
+
+## leetCode20 有效的括号
+1 堆栈  左括号进栈 右括号出栈， 判断出栈的左右是否相等 2 非偶数个优化速度 3 判断最后栈是否为空
+
 
 
 
