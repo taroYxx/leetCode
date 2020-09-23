@@ -47,5 +47,11 @@
 1 和三数之和相似， sum>target sum<target, 注意点是要去绝对值去判断距离
 
 
+## leetCode18  四数之和
+1 在三数的基础上增加一次 for循环
+2 去重 if(index > 0 && nums[index] == nums[index-1]) break;  
+3 if (j - 1 > index && nums[j] === nums[j - 1]) break;
+
+
 
 
