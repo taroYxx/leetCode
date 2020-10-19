@@ -1,5 +1,6 @@
 var trap = function(height) {
-    
+    const a = 0;
+    console.log(a);
 
 };
 
