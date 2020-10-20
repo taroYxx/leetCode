@@ -1,23 +1,19 @@
 function backtrack(list, nums) {
     if (list.length === nums.length) {
+        console.log(list)
         return list
     }
-    for(let i = 0; i < nums.length; i++) {
-        nums.pop()
-        backtrack(list,)
-
-        if (tempList.includes(nums[i])) continue;
-        tempList.push(nums[i]);
-        backtrack(list, tempList, nums);
-        tempList.pop();
+    for(const i = 0; i < nums.length; i++) {
+        if (list.includes(nums[i])) continue;
+        const curList = list.push(nums[i])
+        backtrack(curList,nums)
     }
 }
 
 var permute = function(nums) {
     let list = []
-    list.push(backtrack([], nums))
+    backtrack([], nums)
     return list
-
 };
 
 console.log(permute([1,2,3]))
