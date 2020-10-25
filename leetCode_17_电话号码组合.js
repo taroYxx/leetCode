@@ -11,33 +11,25 @@ var letterCombinations = function(digits) {
         "9":['w','x','y','z']
     }
 
-    let nums = [];
-    for (let index = 0; index < digits.length; index++) {
-        nums.push(dic[digits[index]])
-    }
+    // let nums = [];
+    // for (let index = 0; index < digits.length; index++) {
+    //     nums.push(dic[digits[index]])
+    // }
+    let res = [];
 
-    let res = []
-    let visit = new Array(digits.length).fill(false)
-    function backtrack(cur, nums){
-        if(cur.length == nums.length){
-            res.push(cur.concat())
-            console.log(cur);
-            return cur
+    function dfs(curStr, i){
+        if (i > digits.length - 1) {
+            res.push(curStr);
+            return;
         }
-        for (let i = 0; i < nums.length; i++) {
-            for (let j = 0; j < nums[i].length; j++) {
-                const element = nums[i][j];
-                if(visit[i] == true) continue;
-                visit[i] = true;
-                cur.push(element);
-                backtrack(cur, nums)
-                visit[i] = false;
-                cur.pop()
-            }
+        let letter = dic[digits[i]];
+        for (const l of letter) {
+            dfs(curStr + l, i+1);
         }
     }
-    backtrack([],nums)
+    dfs("",0)
+    
     return res;
 
 };
-letterCombinations("23")
+console.log(letterCombinations("23")) 
