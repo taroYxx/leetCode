@@ -5,8 +5,6 @@ var combinationSum2 = function(candidates, target) {
     let res = [];
     let nums = candidates.sort((x, y)=>(x-y));
 
-    let visit = new Array(nums.length).fill(false);
-
     function dfs(cur, sums, start){
         if(sums == target){
             res.push([...cur])
@@ -17,13 +15,11 @@ var combinationSum2 = function(candidates, target) {
         }
 
         for (let i = start; i < nums.length; i++) {
-            if(visit[i] == true || (i-1 >= start && nums[i] == nums[i-1])) continue;
+            if(i-1 >= start && nums[i] == nums[i-1]) continue;
             sums = sums + nums[i];
             cur.push(nums[i]);
-            visit[i] = true;
-            dfs(cur, sums, i);
+            dfs(cur, sums, i+1);
             let b = cur.pop();
-            visit[i] = false;
             sums = sums - b;
         }
     }
@@ -34,4 +30,4 @@ var combinationSum2 = function(candidates, target) {
 };
 
 
-console.log(combinationSum2([10,1,2,7,6,1,5], 8))
+console.log(combinationSum2([2,5,2,1,2],5))
