@@ -6,9 +6,9 @@ var solveNQueens = function(n) {
     }
     
     function dfs(x, y, path){
-        console.log(visit)
+        
         if(path == 4){
-            
+            console.log(visit)
             return
         }
         if(x>=n || y>= n){
@@ -52,7 +52,7 @@ var solveNQueens = function(n) {
 
         }
         
-        for (let i = x; i < n; i++) {
+        for (let i = 0; i < n; i++) {
             for (let j = 0; j < n; j++) {
                 visit[i][j] = "Q";
                 path = path + 1;
@@ -66,9 +66,6 @@ var solveNQueens = function(n) {
     }
 
     dfs(0, 0, 0);
-
-
-
 
 };
 
