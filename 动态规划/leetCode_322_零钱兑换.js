@@ -1,21 +1,23 @@
 var coinChange = function(coins, amount) {
 
-    let count = 0;
-    let array = coins.sort((x,y)=> x-y)
-    while(amount > 0){
-        for (let i = array.length-1; i >= 0; i--) {
-            if(amount >= array[i]){
-                amount = amount - array[i];
-                count = count + 1;
-                break;
-            }
-            if(amount < array[i] && i == 0){
-                return -1;
+
+    let dp = new Array(amount+1).fill(-1);
+    dp[0] = 0;
+   
+    for (let i = 1; i <= amount; i++) {
+        
+        for (let j = 0; j < coins.length; j++) {
+            
+            if (i-coins[j]>=0&&dp[i-coins[j]]!=-1) {
+                if (dp[i]==-1||dp[i]>dp[i-coins[j]]+1) {
+                        dp[i]=dp[i-coins[j]]+1;
+                }
             }
         }
+        
     }
-    return count
 
+    return dp[amount];
 
 };
 
