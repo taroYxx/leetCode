@@ -1,14 +1,39 @@
 var preimageSizeFZF = function(K) {
-    let max = 1e9;
-    console.log(max)
+    
+    return rightBound(K) - leftBound(K) + 1;
+
 };
 
-
-var leftBound()= function(K){
+var rightBound = function(K){
     let left = 0;
-    let right = 1e9;
-    
+    let right = K+1;
+    while(left <= right){
+        let mid = left + (right - left >> 1);
+        if(trailingZeroes(mid) > K){
+            right = mid - 1;
+        }else if(trailingZeroes(mid) == K){
+            left = mid + 1;
+        }else if(trailingZeroes(mid) < K){
+            left = mid + 1;
+        }
+    }
+    return right;
+}
 
+var leftBound = function(K){
+    let left = 0;
+    let right = K+1;
+    while(left <= right){
+        let mid = left + (right - left >> 1);
+        if(trailingZeroes(mid) < K){
+            left = mid + 1;
+        }else if(trailingZeroes(mid) == K){
+            right = mid - 1;
+        }else if(trailingZeroes(mid) > K){
+            right = mid - 1;
+        }
+    }
+    return left
 }
 
 var trailingZeroes = function(n) {
@@ -21,4 +46,4 @@ var trailingZeroes = function(n) {
     return res;
 };
 
-console.log(preimageSizeFZF(5))
+console.log(preimageSizeFZF(0))
