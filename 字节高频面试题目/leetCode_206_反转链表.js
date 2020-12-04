@@ -19,9 +19,11 @@ var reverseList = function(head) {
         tempNode = head;
         head = head.next;
         if(newHead.next == null){
+            // 头结点
             newHead.next = tempNode;
             tempNode.next = null;
         }else{
+            // 链接新节点
             let a = newHead.next;
             newHead.next = tempNode;
             tempNode.next = a;
@@ -34,21 +36,15 @@ var reverseList = function(head) {
 
 
 var reverseList = function(head) {
-
-    // 直接删一个节点 加一个节点
-    let newHead = new ListNode();
-    let node  = head;
-    let preNode = new ListNode();
-    while(node != null){
-        let nextNode = node.next;
-        if(nextNode == null){
-            newHead = node;
-        }
-        node.next = preNode;
-        preNode = node;
-        node = nextNode;
+    let prev = null;
+    let curr = head;
+    while(curr != null){
+        let next = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = next;
     }
-    return newHead;
+    return prev;
 
 };
 
