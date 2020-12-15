@@ -1,24 +1,18 @@
 var subsets = function(nums) {
 
-    let sum = [];
-    for (let i = 0; i < nums.length; i++) {
-        let res = [];
-        for (let j = 0; j < i; j++) {
+   let res = [];   
+   function dfs(i, tmp){
+       res.push([...tmp]);
+       for (let j = i; j < nums.length; j++) {
+            tmp.push(nums[j]);
+            dfs(j+1, tmp);
+            tmp.pop();
+       }
+   }
+   dfs(0, [])
 
-            sum.push(res);
-        }
-        
-    }
-
-    function getArray(array, n){
-        
-
-        
-    }
-
-    function dfs(array, n){
-        
-    }
-
+   return res;
 
 };
+
+console.log(subsets([1, 2, 3]))
