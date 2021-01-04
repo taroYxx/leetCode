@@ -1,33 +1,26 @@
 var removeKdigits = function(num, k) {
-    
-
+    let stack = [];
     let count = 0;
-    let array = num.split("")
-
-    for (let i = 0; i < array.length; i++) {
-        if(count < k && i < array.length-1){
-            if(Number(array[i]) > Number(array[i+1])){
-                array[i] = "@"
-                count = count + 1
-            }
-        }else{
-            break;
+    for (let i = 0; i < num.length; i++) {
+        while(stack[stack.length - 1] > num[i] && count < k){
+            stack.pop();
+            count ++ ;
         }
+        if(stack.length != 0 || num[i] != "0"){
+            stack.push(num[i])
+        }
+        
     }
-    if(count < k){
-        let remian  = k - count;
-        for (let i = 0; i < remian; i++) {
-            array[num.length - i - 1] = "@";
-        }
+    while (count < k) {
+        stack.pop();
+        count ++;
     }
 
-    console.log()
-    let res =  parseInt(array.join("").replace(/\@/g,""));
-    return isNaN(res)? "0" : String(res) ;
-
-    
-
+    if(stack.length == 0){
+        return "0"
+    }
+    return stack.join("");
 };
 
 
-console.log(removeKdigits("1234567890", 10))
+console.log(removeKdigits("1234567890", 9))
