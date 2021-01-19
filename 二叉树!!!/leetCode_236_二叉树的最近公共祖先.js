@@ -1,4 +1,4 @@
-* Definition for a binary tree node.
+/* Definition for a binary tree node.
 * function TreeNode(val) {
 *     this.val = val;
 *     this.left = this.right = null;
@@ -22,7 +22,7 @@ var lowestCommonAncestor = function(root, p, q) {
     }
     // 情况 2
     if (left == null && right == null) {
-        return null;
+         
     }
     // 情况 3
     return left == null ? right : left;
