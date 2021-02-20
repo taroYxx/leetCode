@@ -12,7 +12,7 @@ var exist = function(board, word) {
         }
     }
 
-    console.log(res)
+    console.log(res);
     
     function dfs(i , j, count){
         if(count == word.length){
