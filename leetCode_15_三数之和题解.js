@@ -1,4 +1,33 @@
 var threeSum = function(nums) {
+// 使用dfs 需要去重
+    // let res = [];
+    // let n = nums.length;
+    // nums = nums.sort((a, b) => a - b);
+    // let visit = new Array().fill(false);
+    // function dfs(sum, array, start){
+    //     // if(sum == 0){
+    //     //     res.push(array.concat());
+    //     // }
+    //     if(array.length == 3 && sum == 0){
+    //         res.push(array.concat());
+            
+    //         return;
+    //     }
+    //     for (let i = start; i < nums.length; i++) {
+    //         if(visit[i]) continue;
+    //         sum = sum + nums[i];
+    //         array.push(nums[i]);
+    //         visit[i] = true;
+    //         dfs(sum, array, i);
+    //         visit[i] = false;
+    //         sum = sum - nums[i];
+    //         array.pop()
+    //     }
+    // }
+    // dfs(0, [], 0);
+    // console.log(res);
+    // return res;
+
 
     let newNums = nums.sort((a, b) => a - b);
     let result = []
