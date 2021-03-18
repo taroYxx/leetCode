@@ -47,6 +47,7 @@ NSURLSession有三个控制方法，取消(cancel)、暂停(suspend)、继续(re
 
 ### objc中向一个nil对象发送消息将会发生什么？
 如果向一个nil对象发送消息，首先在寻找对象的isa指针时就是0地址返回了，所以不会出现任何错误。
+野指针崩溃是因为没有将对象指针置为nil，原来对象指针指向的是NSNULL对象，所以会crash找不到方法。
 
 ### runtime如何实现weak变量的自动置nil？
 runtime 对注册的类， 会进行布局，对于 weak 对象会放入一个 hash 表中。 用 weak 指向的对象内存地址作为 key，当此对象的引用计数为0的时候会 dealloc，假如 weak 指向的对象内存地址是a，那么就会以a为键， 在这个 weak 表中搜索，找到所有以a为键的 weak 对象，从而设置为 nil。
@@ -63,6 +64,9 @@ NSRunLoopCommonModes（kCFRunLoopCommonModes）：Mode集合
 
 手动干预释放时机--指定 autoreleasepool 就是所谓的：当前作用域大括号结束时释放。
 系统自动去释放--不手动指定 autoreleasepool Autorelease对象出了作用域之后，会被添加到最近一次创建的自动释放池中，并会在当前的 runloop 迭代结束时释放。
+
+如果你的应用或者线程长时间存活，并可能产生大量的自动释放的对象，应该手动创建自动释放池，否则，自动释放的对象会积累并占用你的内存。当使用ARC管理内存的时候，在线程中使用for大量分配对象而不用autoreleasepool则可能会造成内存泄漏
+
 
 
 ### 在 block 内为什么不能修改 block 外部变量
@@ -106,7 +110,46 @@ https://blog.csdn.net/weixin_30871701/article/details/95787400
 
 Mach-O 文件是编译后的产物，而动态库在运行时才会被链接，并没参与 Mach-O 文件的编译和链接，所以 Mach-O 文件中并没有包含动态库里的符号定义。也就是说，这些符号会显示为“未定义”，但它们的名字和对应的库的路径会被记录下来。运行时通过 dlopen 和 dlsym 导入动态库时，先根据记录的库路径找到对应的库，再通过记录的名字符号找到绑定的地址。
 
+### 是dealloc方法执行内容
+![](media/16138935776118/16153621914563.jpg)
 
+
+### 能否向编译后得到的类中增加实例变量？能否向运行时创建的类中添加实例变量
+1.因为编译后的类已经注册在 runtime 中,类结构体中的 objc_ivar_list 实例变量的链表和 instance_size 实例变量的内存大小已经确定，同时runtime会调用 class_setvarlayout 或 class_setWeaklvarLayout 来处理strong weak 引用.所以不能向存在的类中添加实例变量。
+2.运行时创建的类是可以添加实例变量，调用class_addIvar函数. 但是的在调用 objc_allocateClassPair 之后，objc_registerClassPair 之前,原因同上
+
+### dispatch_barrier_sync和dispatch_barrier_async的区别
+
+共同点：
+1、等待在它前面插入队列的任务先执行完
+2、等待他们自己的任务执行完再执行后面的任务
+不同点（追加任务的不同）：
+1、dispatch_barrier_sync将自己的任务插入到队列的时候，需要等待自己的任务结束之后才会继续插入被写在它后面的任务，然后执行它们
+
+2、dispatch_barrier_async将自己的任务插入到队列之后，不会等待自己的任务结束，它会继续把后面的任务插入到队列，然后等待自己的任务结束后才执行后面任务。
+
+所以，dispatch_barrier_async的不等待（异步）特性体现在将任务插入队列的过程，它的等待特性体现在任务真正执行的过程。
+
+
+
+### MVC MVP MVVM
+
+
+MVC: 
+优点：模型和View相对独立，复用率高
+缺点：controller代码过于臃肿
+
+变种： 将一部分模型移到View里面，进行绑定
+优点：对controller进行瘦身，将View内部的具体控件封装起来。
+缺点：View依赖于Model
+
+MVP: 
+控制器会多个Present， present把一个View和Model整和在了一起。控制器管理Present
+颗粒度更细一点
+
+MVVM:
+View和Model进行绑定
+控制器负责管理ViewModel就可以了
 
 
 
